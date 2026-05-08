@@ -1,8 +1,12 @@
 import json
+import os
 
 class EventManager:
     def __init__(self, filename):
         self.filename = filename
+        if not os.path.exists(self.filename):
+            with open(self.filename, 'w') as file:
+                json.dump({}, file)
         self.pull_events()
 
     def pull_events(self):
