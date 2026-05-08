@@ -23,6 +23,7 @@ intents = discord.Intents.default()
 intents.members, intents.message_content = True, True
 bot = Bot(command_prefix="/", intents=intents)
 event_manager = events.EventManager("events.json")
+user_manager = events.UserManager("users.json")
 
 @bot.tree.command(name="register", description="Register for an event")
 async def register(interaction: discord.Interaction, name: str):
@@ -81,6 +82,12 @@ async def announce(interaction: discord.Interaction, title: str, content: str):
         color=discord.Color.blue()
     )
     await interaction.response.send_message(embed=announcement)
+
+@bot.tree.command(name="email", description="Set user email")
+async def email(interaction: discord.Interaction, email: str):
+    user_manager.add_user(interaction.user.id, email)
+    logging.info(f"set email for '{interaction.user}'")
+    await interaction.response.send_message(f"Your email has been set to {email}.", ephemeral=True)
 
 @bot.tree.command(name="new_event", description="Create a new event")
 @discord.app_commands.checks.has_role("admin")
