@@ -44,3 +44,24 @@ class EventManager:
         self.pull_events()
         guild_id = str(guild_id)
         return [event for event in self.events.get(guild_id, {})]
+
+class UserManager:
+    def __init__(self, filename):
+        self.filename = filename
+        if not os.path.exists(self.filename):
+            with open(self.filename, 'w') as file:
+                json.dump({}, file)
+        self.pull_users()
+
+    def pull_users(self):
+        with open(self.filename, 'r') as file:
+            self.users = json.load(file)
+
+    def save_users(self):
+        with open(self.filename, 'w') as file:
+            json.dump(self.users, file, indent=4)
+
+    def add_user(self, user, email):
+        self.pull_users()
+        self.users[user] = {"email": email}
+        self.save_users()
