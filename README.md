@@ -1,5 +1,4 @@
 # Mathbot
----
 
 Mathbot is a discord bot for easy event registration in a Discord server. Built for the PHHS Math Team!
 
