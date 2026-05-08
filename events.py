@@ -63,5 +63,7 @@ class UserManager:
 
     def add_user(self, user, email):
         self.pull_users()
+        user = str(user)
         self.users[user] = {"email": email}
+        print(self.users)
         self.save_users()
